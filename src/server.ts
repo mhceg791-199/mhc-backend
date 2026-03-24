@@ -25,6 +25,20 @@
 // app.use(requestLogger);
 // app.use(generalLimiter);
 
+
+// // ROOT ROUTE
+// app.get("/", (req, res) => {
+//   res.status(200).json({
+//     success: true,
+//     message: "Welcome to MCH Backend API",
+//     description: "This is the official backend for MCH portfolio and job application system.",
+//     version: "1.0.0",
+//     documentation: "/api/docs",
+//     status: "Running",
+//     timestamp: new Date().toISOString(),
+//   });
+// });
+
 // /* ─── Swagger ─── */
 // app.use(
 //   "/api/docs",
@@ -117,11 +131,6 @@ app.get("/", (req, res) => {
     documentation: "/api/docs",
     status: "Running",
     timestamp: new Date().toISOString(),
-    endpoints: {
-      applications: "/api/applications/apply",
-      health: "/api/health",
-      docs: "/api/docs",
-    },
   });
 });
 
