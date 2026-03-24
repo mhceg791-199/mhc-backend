@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "auth-landing-page-api",
+      name: "mhc-backend-page-api",
       script: "dist/server.js",
       instances: "max",
       exec_mode: "cluster",

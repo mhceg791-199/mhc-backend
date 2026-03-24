@@ -4,11 +4,11 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Auth Landing Page API",
+      title: "MHCEG Page API",
       version: "1.0.0",
-      description: "API documentation for Auth Landing Page — Canadian Home, Electrical and Supply Solutions e-commerce platform",
+      description: "API documentation for MHCEG Page — Canadian Home, Electrical and Supply Solutions e-commerce platform",
       contact: {
-        name: "Auth Landing Page by MHC",
+        name: "MHCEG Page by MHC",
       },
     },
     servers: [

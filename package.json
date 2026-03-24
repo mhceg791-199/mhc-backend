@@ -1,7 +1,7 @@
 {
-  "name": "auth-landing-page-server",
+  "name": "mhc-backend-server",
   "version": "1.0.0",
-  "description": "Auth Landing Pagee Backend - Express + MongoDB + TypeScript",
+  "description": "MHC Backend - Express + MongoDB + TypeScript",
   "main": "dist/server.js",
   "type": "module",
   "scripts": {

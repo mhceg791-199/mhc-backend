@@ -11,7 +11,7 @@ router.use("/appliactions", applictionsRoutes);
 
 // Health check
 router.get("/health", (_req, res) => {
-  res.json({ success: true, message: "Auth Landing Page API is running", timestamp: new Date().toISOString() });
+  res.json({ success: true, message: "MHCEG API is running", timestamp: new Date().toISOString() });
 });
 
 export default router;
