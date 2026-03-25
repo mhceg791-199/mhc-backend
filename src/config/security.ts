@@ -21,7 +21,14 @@ export const helmetConfig = helmet({
 export const corsConfig = cors({
   origin: ENV.isProduction
     ? [ENV.clientUrl]
-    : [ENV.clientUrl, "https://auth-client-three-umber.vercel.app/", "http://localhost:5173", "http://localhost:3000" , "https://mosaic-eng.com"],
+    : [
+        ENV.clientUrl,
+        "https://auth-client-three-umber.vercel.app/",
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://mosaic-eng.com",
+        "https://mosaic-propmgmt.com"
+      ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
