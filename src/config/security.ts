@@ -33,7 +33,8 @@ export const corsConfig = cors({
         "https://indigenousmosaic.com",
         "https://www.dattatayefi.com",
         "https://mhc-eg.com",
-        "https://www.wolsey.ca"
+        "https://www.wolsey.ca",
+        "https://mosaicholding.com"
       ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
