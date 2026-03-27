@@ -9,6 +9,10 @@ export interface IApplication extends Document {
   portfolio?: string;
   coverLetter: string;
   resumeUrl: string;
+  site?: {
+    name?: string;
+    url?: string;
+  };
 }
 
 const applicationSchema = new Schema<IApplication>(
@@ -33,6 +37,11 @@ const applicationSchema = new Schema<IApplication>(
     coverLetter: { type: String, required: true },
 
     resumeUrl: { type: String, required: true },
+
+    site: {
+      name: String,
+      url: String,
+    },
   },
   { timestamps: true }
 );
