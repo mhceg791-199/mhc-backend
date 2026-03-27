@@ -187,99 +187,6 @@ import {
 
 /////////////////////////////////////////////
 
-// export const submitApplication = async (req: Request, res: Response) => {
-//   try {
-//     const {
-//       name,
-//       email,
-//       phone,
-//       position,
-//       experience,
-//       portfolio,
-//       coverLetter,
-//       siteName = "Kaller Architecture",
-//       siteURL = "",
-//     } = req.body;
-
-//     if (!req.file) {
-//       return res.status(400).json({ message: "Resume is required" });
-//     }
-
-//     // 1. رفع الملف أولاً
-//     const uploadResult: any = await uploadToCloudinary(req.file);
-//     const resumeUrl = buildDownloadUrl(uploadResult, ENV.CLOUDINARY_CLOUD_NAME);
-
-//     // 2. حفظ في الداتابيز
-//     const newApplication = await application.create({
-//       name,
-//       email,
-//       phone,
-//       position,
-//       experience,
-//       portfolio,
-//       coverLetter,
-//       resumeUrl,
-//       siteName,
-//       siteURL,
-//     });
-
-//     // 3. إرسال الإيميل في الخلفية (غير متزامن)
-//     sendApplicationEmailAsync({
-//       name,
-//       email,
-//       phone,
-//       position,
-//       experience,
-//       portfolio,
-//       coverLetter,
-//       resumeUrl,
-//       siteName,
-//       siteURL,
-//     }).catch((err) => {
-//       console.error("Background email failed:", err);
-//       // هنا تقدر تسجل الخطأ في الـ DB أو Sentry لو عندك
-//     });
-
-//     // رد فوري للفرونت (مهم جداً)
-//     res.status(201).json({
-//       message: "Application submitted successfully",
-//       data: newApplication,
-//     });
-//   } catch (error: any) {
-//     console.error("❌ ERROR:", error);
-//     res.status(500).json({ message: error.message || "Something went wrong" });
-//   }
-// };
-
-// // دالة منفصلة لإرسال الإيميل في الخلفية
-// const sendApplicationEmailAsync = async (data: any) => {
-//   try {
-//     await transporter.sendMail({
-//       from: `"Kaller Architecture" <${ENV.EMAIL_USER}>`,
-//       to: ENV.EMAIL_RECEIVER,
-//       subject: `🎯 New Job Application - ${data.position} (${data.siteName})`,
-//       html: `... نفس الـ HTML اللي عندك ...`,
-//     });
-
-//     console.log(`✅ Email sent successfully for ${data.name}`);
-//   } catch (err) {
-//     console.error("Failed to send email:", err);
-//   }
-// };
-
-
-/////////////////////////////////////////////////
-
-
-import { Request, Response } from "express";
-import { ENV } from "../config/env.js";
-import application from "../models/application.js";
-import { transporter } from "../utils/mailer.js";
-import {
-  buildDownloadUrl,
-  uploadToCloudinary,
-} from "../utils/uploadToCloudinary.js";
-
 export const submitApplication = async (req: Request, res: Response) => {
   try {
     const {
@@ -290,7 +197,7 @@ export const submitApplication = async (req: Request, res: Response) => {
       experience,
       portfolio,
       coverLetter,
-      siteName = "Unknown Website",
+      siteName = "Kaller Architecture",
       siteURL = "",
     } = req.body;
 
@@ -298,15 +205,11 @@ export const submitApplication = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Resume is required" });
     }
 
-    // ✅ 1. Upload to Cloudinary
+    // 1. رفع الملف أولاً
     const uploadResult: any = await uploadToCloudinary(req.file);
+    const resumeUrl = buildDownloadUrl(uploadResult, ENV.CLOUDINARY_CLOUD_NAME);
 
-    const resumeUrl = buildDownloadUrl(
-      uploadResult,
-      ENV.CLOUDINARY_CLOUD_NAME
-    );
-
-    // ✅ 2. Save in DB
+    // 2. حفظ في الداتابيز
     const newApplication = await application.create({
       name,
       email,
@@ -320,14 +223,8 @@ export const submitApplication = async (req: Request, res: Response) => {
       siteURL,
     });
 
-    // ✅ 3. Respond FAST
-    res.status(201).json({
-      message: "Application submitted successfully",
-      data: newApplication,
-    });
-
-    // ✅ 4. Send Email in Background (NO await)
-    sendApplicationEmail({
+    // 3. إرسال الإيميل في الخلفية (غير متزامن)
+    sendApplicationEmailAsync({
       name,
       email,
       phone,
@@ -338,77 +235,34 @@ export const submitApplication = async (req: Request, res: Response) => {
       resumeUrl,
       siteName,
       siteURL,
+    }).catch((err) => {
+      console.error("Background email failed:", err);
+      // هنا تقدر تسجل الخطأ في الـ DB أو Sentry لو عندك
     });
 
+    // رد فوري للفرونت (مهم جداً)
+    res.status(201).json({
+      message: "Application submitted successfully",
+      data: newApplication,
+    });
   } catch (error: any) {
     console.error("❌ ERROR:", error);
-
-    res.status(500).json({
-      message: error.message || "Something went wrong",
-    });
+    res.status(500).json({ message: error.message || "Something went wrong" });
   }
 };
 
-// 📧 Email Function (Background)
-const sendApplicationEmail = async (data: any) => {
+// دالة منفصلة لإرسال الإيميل في الخلفية
+const sendApplicationEmailAsync = async (data: any) => {
   try {
     await transporter.sendMail({
-      from: data.siteName
-        ? `"${data.siteName}" <${ENV.EMAIL_USER}>`
-        : ENV.EMAIL_USER,
-
+      from: `"Kaller Architecture" <${ENV.EMAIL_USER}>`,
       to: ENV.EMAIL_RECEIVER,
-
       subject: `🎯 New Job Application - ${data.position} (${data.siteName})`,
-
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial; color: #333; }
-            .container { max-width: 600px; margin: auto; }
-            .header { background: #000; color: #fff; padding: 20px; text-align:center; }
-            .content { padding: 20px; background: #f9f9f9; }
-            .row { margin: 10px 0; background: #fff; padding: 10px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>New Application - ${data.siteName}</h2>
-            </div>
-            <div class="content">
-              <div class="row"><b>Website:</b> <a href="${data.siteURL}">${data.siteName}</a></div>
-              <div class="row"><b>Name:</b> ${data.name}</div>
-              <div class="row"><b>Email:</b> ${data.email}</div>
-              <div class="row"><b>Phone:</b> ${data.phone}</div>
-              <div class="row"><b>Position:</b> ${data.position}</div>
-              <div class="row"><b>Experience:</b> ${data.experience}</div>
-
-              ${
-                data.portfolio
-                  ? `<div class="row"><b>Portfolio:</b> <a href="${data.portfolio}">${data.portfolio}</a></div>`
-                  : ""
-              }
-
-              <div class="row">
-                <b>Cover Letter:</b>
-                <p style="white-space: pre-wrap;">${data.coverLetter}</p>
-              </div>
-
-              <div class="row" style="text-align:center;">
-                <a href="${data.resumeUrl}">Download Resume</a>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+      html: `... نفس الـ HTML اللي عندك ...`,
     });
 
-    console.log("✅ Email sent successfully");
+    console.log(`✅ Email sent successfully for ${data.name}`);
   } catch (err) {
-    console.error("❌ Email Error:", err);
+    console.error("Failed to send email:", err);
   }
 };
