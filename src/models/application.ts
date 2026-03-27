@@ -9,10 +9,8 @@ export interface IApplication extends Document {
   portfolio?: string;
   coverLetter: string;
   resumeUrl: string;
-  site?: {
-    name?: string;
-    url?: string;
-  };
+  siteName?: string;
+  siteURL?: string;
 }
 
 const applicationSchema = new Schema<IApplication>(
@@ -33,15 +31,19 @@ const applicationSchema = new Schema<IApplication>(
     experience: { type: String, required: true },
 
     portfolio: String,
+    
+    siteName: String,
+    siteURL: String,
 
     coverLetter: { type: String, required: true },
 
     resumeUrl: { type: String, required: true },
 
-    site: {
-      name: String,
-      url: String,
-    },
+
+    // site: {
+    //   name: String,
+    //   url: String,
+    // },
   },
   { timestamps: true }
 );
