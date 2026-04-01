@@ -90,54 +90,54 @@
 /////////////////////////////////////////////////////////////////////// vercel
 /////////////////////////////////////////////////////////////////////////////
 
-// import express from "express";
-// import compression from "compression";
-// import cookieParser from "cookie-parser";
-// import swaggerUi from "swagger-ui-express";
+import express from "express";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
 
-// import { connectDatabase } from "./config/database.js";
-// import { helmetConfig, corsConfig } from "./config/security.js";
-// import { swaggerSpec } from "./config/swagger.js";
-// import { requestLogger } from "./middlewares/requestLogger.js";
-// import { generalLimiter } from "./middlewares/rateLimiter.js";
-// import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
-// import routes from "./routes/index.js";
-// import { rootTemplate } from "./utils/rootTemplate.js";
+import { connectDatabase } from "./config/database.js";
+import { helmetConfig, corsConfig } from "./config/security.js";
+import { swaggerSpec } from "./config/swagger.js";
+import { requestLogger } from "./middlewares/requestLogger.js";
+import { generalLimiter } from "./middlewares/rateLimiter.js";
+import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
+import routes from "./routes/index.js";
+import { rootTemplate } from "./utils/rootTemplate.js";
 
-// const app = express();
+const app = express();
 
-// // Middlewares
-// app.use(helmetConfig);
-// app.use(corsConfig);
-// app.use(compression());
-// app.use(express.json({ limit: "10mb" }));
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
-// app.use(requestLogger);
-// app.use(generalLimiter);
+// Middlewares
+app.use(helmetConfig);
+app.use(corsConfig);
+app.use(compression());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(requestLogger);
+app.use(generalLimiter);
 
-// // Swagger
-// app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// app.get("/api/docs.json", (_req, res) => res.json(swaggerSpec));
+// Swagger
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/api/docs.json", (_req, res) => res.json(swaggerSpec));
 
-// // ROOT ROUTE
-// app.get("/", (req, res) => {
-//   res.setHeader("Content-Type", "text/html");
-//   res.status(200).send(rootTemplate(
-//     "MHC",
-//     "https://mosaicholding.com"
-//   ));
-// });
+// ROOT ROUTE
+app.get("/", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.status(200).send(rootTemplate(
+    "MHC",
+    "https://mosaicholding.com"
+  ));
+});
 
-// // Routes
-// app.use("/api", routes);
+// Routes
+app.use("/api", routes);
 
-// // Errors
-// app.use("/api/*", notFoundHandler);
-// app.use(errorHandler);
+// Errors
+app.use("/api/*", notFoundHandler);
+app.use(errorHandler);
 
-// // ❗ مهم جدا: ده بديل app.listen
-// export default async function handler(req: any, res: any) {
-//   await connectDatabase();
-//   return app(req, res);
-// }
+// ❗ مهم جدا: ده بديل app.listen
+export default async function handler(req: any, res: any) {
+  await connectDatabase();
+  return app(req, res);
+}
