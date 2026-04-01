@@ -12,6 +12,7 @@
 // import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
 // import routes from "./routes/index.js";
 // import { logger } from "./utils/logger.js";
+// import { rootTemplate } from "./utils/rootTemplate.js";
 
 // const app = express();
 
@@ -29,94 +30,10 @@
 // // // ====================== ROOT ROUTE - HTML Response ======================
 // app.get("/", (req, res) => {
 //   res.setHeader("Content-Type", "text/html");
-//   res.status(200).send(`
-//     <!DOCTYPE html>
-//     <html lang="en" dir="ltr">
-//     <head>
-//       <meta charset="UTF-8">
-//       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//       <title>Kaller Architecture - Backend API</title>
-//       <style>
-//         body {
-//           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//           background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-//           color: #e0e0e0;
-//           margin: 0;
-//           padding: 0;
-//           min-height: 100vh;
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//           text-align: center;
-//         }
-//         .container {
-//           max-width: 800px;
-//           padding: 40px 20px;
-//         }
-//         h1 {
-//           font-size: 3.5rem;
-//           font-weight: 700;
-//           color: #C5A363;
-//           margin-bottom: 10px;
-//         }
-//         h2 {
-//           font-size: 1.8rem;
-//           font-weight: 300;
-//           color: #aaaaaa;
-//           margin-bottom: 30px;
-//         }
-//         p {
-//           font-size: 1.1rem;
-//           line-height: 1.8;
-//           color: #cccccc;
-//           max-width: 600px;
-//           margin: 0 auto 30px;
-//         }
-//         .status {
-//           display: inline-block;
-//           background: #22c55e;
-//           color: #000;
-//           padding: 8px 20px;
-//           border-radius: 50px;
-//           font-weight: 600;
-//           font-size: 0.95rem;
-//           margin-bottom: 30px;
-//         }
-//         .links a {
-//           color: #C5A363;
-//           text-decoration: none;
-//           margin: 0 15px;
-//           font-weight: 500;
-//         }
-//         .links a:hover {
-//           text-decoration: underline;
-//         }
-//         footer {
-//           margin-top: 60px;
-//           font-size: 0.9rem;
-//           color: #666;
-//         }
-//       </style>
-//     </head>
-//     <body>
-//       <div class="container">
-//         <h1>MHC</h1>
-//         <h2>Backend API</h2>
-        
-//         <div class="status">● API is Running Successfully</div>
-        
-//         <p>
-//          Welcome to MHC's Backend.<br>
-//           We offer integrated architectural services with a focus on accurate design and practical implementation.</p>
-
-//         <footer>
-//           © 2026 MHC • All Rights Reserved<br>
-//           Backend Version 1.0.0
-//         </footer>
-//       </div>
-//     </body>
-//     </html>
-//   `);
+//   res.status(200).send(rootTemplate(
+//     "MHC",                   
+//     "https://mosaicholding.com"
+//   ));
 // });
 
 // /* ─── Swagger ─── */
@@ -184,6 +101,7 @@ import { requestLogger } from "./middlewares/requestLogger.js";
 import { generalLimiter } from "./middlewares/rateLimiter.js";
 import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
 import routes from "./routes/index.js";
+import { rootTemplate } from "./utils/rootTemplate.js";
 
 const app = express();
 
@@ -203,94 +121,11 @@ app.get("/api/docs.json", (_req, res) => res.json(swaggerSpec));
 
 // ROOT ROUTE
 app.get("/", (req, res) => {
-    res.status(200).send(`
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Kaller Architecture - Backend API</title>
-      <style>
-        body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-          color: #e0e0e0;
-          margin: 0;
-          padding: 0;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-        }
-        .container {
-          max-width: 800px;
-          padding: 40px 20px;
-        }
-        h1 {
-          font-size: 3.5rem;
-          font-weight: 700;
-          color: #C5A363;
-          margin-bottom: 10px;
-        }
-        h2 {
-          font-size: 1.8rem;
-          font-weight: 300;
-          color: #aaaaaa;
-          margin-bottom: 30px;
-        }
-        p {
-          font-size: 1.1rem;
-          line-height: 1.8;
-          color: #cccccc;
-          max-width: 600px;
-          margin: 0 auto 30px;
-        }
-        .status {
-          display: inline-block;
-          background: #22c55e;
-          color: #000;
-          padding: 8px 20px;
-          border-radius: 50px;
-          font-weight: 600;
-          font-size: 0.95rem;
-          margin-bottom: 30px;
-        }
-        .links a {
-          color: #C5A363;
-          text-decoration: none;
-          margin: 0 15px;
-          font-weight: 500;
-        }
-        .links a:hover {
-          text-decoration: underline;
-        }
-        footer {
-          margin-top: 60px;
-          font-size: 0.9rem;
-          color: #666;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h1>MHC</h1>
-        <h2>Backend API</h2>
-        
-        <div class="status">● API is Running Successfully</div>
-        
-        <p>
-         Welcome to MHC's Backend.<br>
-          We offer integrated architectural services with a focus on accurate design and practical implementation.</p>
-
-        <footer>
-          © 2026 MHC • All Rights Reserved<br>
-          Backend Version 1.0.0
-        </footer>
-      </div>
-    </body>
-    </html>
-  `);
+  res.setHeader("Content-Type", "text/html");
+  res.status(200).send(rootTemplate(
+    "MHC",
+    "https://mosaicholding.com"
+  ));
 });
 
 // Routes
