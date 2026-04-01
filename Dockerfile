@@ -21,6 +21,6 @@ RUN corepack enable && pnpm install --frozen-lockfile --prod
 COPY --from=base /app/dist ./dist
 
 ENV NODE_ENV=production
-EXPOSE 5000
+EXPOSE 5055
 
 CMD ["node", "dist/server.js"]
