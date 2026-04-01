@@ -20,7 +20,7 @@ config({ path: "../config/.env" });
 //   isDevelopment: process.env.NODE_ENV !== "development",
 // };
 export const ENV = {
-  port: parseInt(process.env.PORT || "5000", 10),
+  port: parseInt(process.env.PORT || "5055", 10),
   mongodbUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/application",
 
   EMAIL_USER: process.env.EMAIL_USER || "mhceg791@gmail.com",

@@ -19,25 +19,25 @@ export const helmetConfig = helmet({
 });
 
 export const corsConfig = cors({
-  // origin: 
-  // ENV.isProduction
-  //   ? [ENV.clientUrl]
-  //   : [
-  //       ENV.clientUrl,
-  //       "http://localhost:5173",
-  //       "https://auth-client-three-umber.vercel.app",
-  //       "http://localhost:3000",
-  //       "https://mosaic-eng.com",
-  //       "https://mosaic-propmgmt.com",
-  //       "https://www.mosaic-imports.com",
-  //       "https://mosaicrestate.com",
-  //       "https://indigenousmosaic.com",
-  //       "https://www.dattatayefi.com",
-  //       "https://mhc-eg.com",
-  //       "https://www.wolsey.ca",
-  //       "https://mosaicholding.com"
-  //     ],
-  origin: true,
+  origin: 
+  ENV.isProduction
+    ? [ENV.clientUrl]
+    : [
+        ENV.clientUrl,
+        "http://localhost:5173",
+        "https://auth-client-three-umber.vercel.app",
+        "http://localhost:3000",
+        "https://mosaic-eng.com",
+        "https://mosaic-propmgmt.com",
+        "https://www.mosaic-imports.com",
+        "https://mosaicrestate.com",
+        "https://indigenousmosaic.com",
+        "https://www.dattatayefi.com",
+        "https://mhc-eg.com",
+        "https://www.wolsey.ca",
+        "https://mosaicholding.com"
+      ],
+  // origin: true,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
