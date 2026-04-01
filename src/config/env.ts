@@ -21,7 +21,7 @@ config({ path: "../config/.env" });
 // };
 export const ENV = {
   port: parseInt(process.env.PORT || "5000", 10),
-  mongodbUri: process.env.MONGODB_URI || "mongodb+srv://application:m01099558675dd@cluster0.yapbdaf.mongodb.net/application",
+  mongodbUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/application",
 
   EMAIL_USER: process.env.EMAIL_USER || "mhceg791@gmail.com",
   EMAIL_PASS: process.env.EMAIL_PASS || "hxfozdddpfxaiobb",
