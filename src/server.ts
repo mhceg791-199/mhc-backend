@@ -117,6 +117,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.use(generalLimiter);
 
+
 // Swagger
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get("/api/docs.json", (_req, res) => res.json(swaggerSpec));
