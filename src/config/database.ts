@@ -24,3 +24,4 @@ export async function disconnectDatabase(): Promise<void> {
   await mongoose.disconnect();
   logger.info("[MongoDB] Disconnected");
 }
+
